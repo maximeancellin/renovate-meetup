@@ -1,4 +1,5 @@
 {
+  "dependencyDashboard": true,
   "customDatasources": {
     "localstaging": {
       "format": "yaml",
