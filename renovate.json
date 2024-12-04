@@ -5,7 +5,7 @@
       "format": "yaml",
       "defaultRegistryUrlTemplate": "file://demonstration/gitops/applications/staging.yaml",
       "transformTemplates": [
-        "{\"releases\":[{\"version\": \"$.spec.generators[?(@.list.elements[?(@.source.repoURL=='{{packageName}}')])].list.elements[?(@.source.repoURL=='{{packageName}}')].source.targetRevision\"}]}"
+        "{\"releases\": [{\"version\": \"spec.generators.[*].list.elements.[*].source.targetRevision\"}]}"
       ]
     }
   },
@@ -16,7 +16,7 @@
         "demonstration/gitops/applications/staging.yaml"
       ],
       "matchStrings": [
-        "repoURL: (?<depName>.*?)\n(( |\n)*)targetRevision: (?<currentValue>.*)"
+        "repoURL:\\s*(?<depName>[^\\n]+)\\s*.*?targetRevision:\\s*(?<currentValue>[^\\s]+)"
       ],
       "datasourceTemplate": "git-tags"
     },
@@ -26,21 +26,10 @@
         "demonstration/gitops/applications/production.yaml"
       ],
       "matchStrings": [
-        "repoURL: (?<packageName>.*?)\n(( |\n)*)targetRevision: (?<currentValue>.*)"
+        "repoURL:\\s*(?<packageName>(?!\\{\\{).*?)\\s*.*?targetRevision:\\s*(?<currentValue>(?!\\{\\{).*?)"
       ],
       "depNameTemplate": "{{{ replace 'git@github.com:maximeancellin\/(.*).git' '$1' packageName }}}",
       "datasourceTemplate": "custom.localstaging"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchManagers": [
-        "custom.regex"
-      ],
-      "matchFileNames": [
-        "demonstration/gitops/applications/production.yaml"
-      ],
-      "groupName": "release-production"
     }
   ]
 }
