@@ -1,4 +1,7 @@
 {
+  "enabledManagers": [
+    "regex"
+  ],
   "dependencyDashboard": true,
   "customDatasources": {
     "localstaging": {
