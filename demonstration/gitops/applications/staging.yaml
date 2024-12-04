@@ -19,7 +19,7 @@ spec:
                   - staging.yaml
   template:
     metadata:
-      name: "{{.name}}"
+      name: "{{.name}}-staging"
     spec:
       project: gitops-staging
       source:

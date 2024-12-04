@@ -19,7 +19,7 @@ spec:
                   - production.yaml
   template:
     metadata:
-      name: "{{.name}}"
+      name: "{{.name}}-production"
     spec:
       project: gitops-production
       source:
