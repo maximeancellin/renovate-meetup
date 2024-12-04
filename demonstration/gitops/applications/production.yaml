@@ -12,7 +12,7 @@ spec:
             source:
               path: deployment
               repoURL: git@github.com:maximeancellin/demo-app-gitops.git
-              targetRevision: main
+              targetRevision: 0.1.0
               helm:
                 valueFiles:
                   - default.yaml
