@@ -19,17 +19,6 @@
         "repoURL:\\s*(?<depName>[^\\n]+)\\s*.*?targetRevision:\\s*(?<currentValue>[^\\s]+)"
       ],
       "datasourceTemplate": "git-tags"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "demonstration/gitops/applications/production.yaml"
-      ],
-      "matchStrings": [
-        "repoURL:\\s*(?<packageName>(?!\\{\\{).*?)\\s*.*?targetRevision:\\s*(?<currentValue>(?!\\{\\{).*?)"
-      ],
-      "depNameTemplate": "{{{ replace 'git@github.com:maximeancellin\/(.*).git' '$1' packageName }}}",
-      "datasourceTemplate": "custom.localstaging"
     }
   ]
 }
