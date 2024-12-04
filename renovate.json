@@ -1,6 +1,6 @@
 {
   "enabledManagers": [
-    "regex"
+    "custom.regex"
   ],
   "dependencyDashboard": true,
   "customDatasources": {
@@ -8,7 +8,7 @@
       "format": "yaml",
       "defaultRegistryUrlTemplate": "file://demonstration/gitops/applications/staging.yaml",
       "transformTemplates": [
-        "{\"releases\": [{\"version\": \"spec.generators.[*].list.elements.[*].source.targetRevision\"}]}"
+        "{\"releases\":[{\"version\": applications.sources[repoURL='{{packageName}}'].targetRevision }]}"
       ]
     }
   },
@@ -22,6 +22,17 @@
         "repoURL:\\s*(?<depName>[^\\n]+)\\s*.*?targetRevision:\\s*(?<currentValue>[^\\s]+)"
       ],
       "datasourceTemplate": "git-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "demonstration/gitops/applications/production.yaml"
+      ],
+      "matchStrings": [
+        "repoURL: (?<packageName>.*?)\n(( |\n)*)targetRevision: (?<currentValue>.*)"
+      ],
+      "depNameTemplate": "{{{ replace 'git@github.com:maximeancellin/(.*).git' '$1' packageName }}}",
+      "datasourceTemplate": "custom.localstaging"
     }
   ]
 }
