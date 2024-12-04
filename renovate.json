@@ -1,6 +1,33 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  "customDatasources": {
+    "localstaging": {
+      "format": "yaml",
+      "defaultRegistryUrlTemplate": "file://demonstration/gitops/applications/staging.yaml",
+      "transformTemplates": [
+        "{\"releases\":[{\"version\": 'applications'.applications.sources[repoURL='{{depName}}'].targetRevision }]}"
+      ]
+    }
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "demonstration/gitops/applications/staging.yaml"
+      ],
+      "matchStrings": [
+        "repoURL: (?<depName>.*?)\n(( |\n)*)targetRevision: (?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "git-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "applications/production.yaml"
+      ],
+      "matchStrings": [
+        "repoURL: (?<depName>.*?)\n(( |\n)*)targetRevision: (?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "custom.localstaging"
+    }
   ]
 }
