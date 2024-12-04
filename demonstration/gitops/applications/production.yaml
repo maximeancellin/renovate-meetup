@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-applications
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - name: demo-gitops-app
+            source:
+              path: deployment
+              repoURL: git@github.com:maximeancellin/demo-app-gitops.git
+              targetRevision: main
+              helm:
+                valueFiles:
+                  - default.yaml
+                  - production.yaml
+  template:
+    metadata:
+      name: "{{.name}}"
+    spec:
+      project: gitops-production
+      source:
+        path: "{{.source.path}}"
+        repoURL: "{{.source.repoURL}}"
+        targetRevision: "{{.source.targetRevision}}"
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: production
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+  templatePatch: |
+    spec:
+      source:
+        helm:
+          valueFiles:
+          {{- range $valueFile := .source.helm.valueFiles }}
+            - {{ $valueFile | toJson }}
+          {{- end }}
