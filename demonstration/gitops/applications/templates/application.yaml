@@ -1,0 +1,30 @@
+{{- range .Values.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .name }}-{{ $.Values.global.namespace }}
+  namespace: {{ $.Values.global.namespace }}
+spec:
+  destination:
+    namespace: {{ $.Values.global.namespace }}
+    server: https://kubernetes.default.svc
+  project: {{ $.Values.global.project }}
+  sources:
+    {{- range .sources }}
+    - path: deployment/
+      repoURL: {{ .repoURL }}
+      targetRevision: {{ .targetRevision }}
+      helm:
+        releaseName: {{ .releaseName }}
+        valueFiles:
+          - default.yaml
+          - {{ $.Values.global.namespace }}.yaml
+    {{- end }}
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+{{- end }}

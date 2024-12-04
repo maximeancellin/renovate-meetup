@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gitops-sources
+  name: gitops-staging
   namespace: argocd
 spec:
   destination:
@@ -12,8 +12,9 @@ spec:
     path: demonstration/gitops/environments
     repoURL: git@github.com:maximeancellin/renovate-meetup.git
     targetRevision: main
-    directory:
-      recurse: true
+    helm:
+      valueFiles:
+        - staging.yaml
 
   syncPolicy:
     automated:
