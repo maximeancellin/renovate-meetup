@@ -7,9 +7,9 @@ spec:
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
-  project: gitops-core
+  project: gitops-staging
   source:
-    path: demonstration/gitops/environments
+    path: demonstration/gitops/applications
     repoURL: git@github.com:maximeancellin/renovate-meetup.git
     targetRevision: main
     helm:

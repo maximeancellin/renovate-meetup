@@ -7,3 +7,6 @@ applications:
     sources:
       - repoURL: git@github.com:maximeancellin/demo-app-gitops.git
         targetRevision: 0.1.0
+        values:
+          - default.yaml
+          - staging.yaml

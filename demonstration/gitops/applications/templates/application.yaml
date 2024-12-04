@@ -4,7 +4,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: {{ .name }}-{{ $.Values.global.namespace }}
-  namespace: {{ $.Values.global.namespace }}
+  namespace: argocd
 spec:
   destination:
     namespace: {{ $.Values.global.namespace }}
@@ -18,8 +18,9 @@ spec:
       helm:
         releaseName: {{ .releaseName }}
         valueFiles:
-          - default.yaml
-          - {{ $.Values.global.namespace }}.yaml
+        {{- range .values }}
+          - {{ . }}
+        {{- end }}
     {{- end }}
   syncPolicy:
     automated:

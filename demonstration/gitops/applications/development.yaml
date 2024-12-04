@@ -7,3 +7,5 @@ applications:
     sources:
       - repoURL: git@github.com:maximeancellin/demo-app-gitops.git
         targetRevision: main
+        values:
+          - default.yaml
