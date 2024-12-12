@@ -447,16 +447,7 @@ configs:
     #   url: https://github.com/argoproj
     #   password: my-password
     #   username: my-username
-    ssh-creds:
-      url: git@github.com:maximeancellin/renovate-meetup.git
-      sshPrivateKey: |
-        -----BEGIN OPENSSH PRIVATE KEY-----
-        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-        QyNTUxOQAAACAXgTZAkEgWhJdoSK1gRaCHsyeWSVvGetmULTSOIeYhpgAAAKAXC5EpFwuR
-        KQAAAAtzc2gtZWQyNTUxOQAAACAXgTZAkEgWhJdoSK1gRaCHsyeWSVvGetmULTSOIeYhpg
-        AAAEAMlJF1mxQr729umyBsNeC8gjjd0I4ZOOO20jyFUkUu3BeBNkCQSBaEl2hIrWBFoIez
-        J5ZJW8Z62ZQtNI4h5iGmAAAAGW1hbmNlbGxpbkBERVNLVE9QLUNJS0RKSDgBAgME
-        -----END OPENSSH PRIVATE KEY-----
+    ssh-creds: {}
 
   # -- Annotations to be added to `configs.credentialTemplates` Secret
   credentialTemplatesAnnotations: {}
